@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.3.0</Version>
+    <Authors>Trdelnik Squad &lt;TrdelnikSquad@cimpress.com&gt;</Authors>
+    <Company>Cimpress</Company>
+    <Product>Fulfillment Location Client for .NET Core</Product>
+    <PackageId>Cimpress.TagliatelleNetCore</PackageId>
+    <Description>A thin client library for Cimpress' Tagliatelle service.</Description>
+    <AssemblyName>Cimpress.TagliatelleNetCore</AssemblyName>
+    <RootNamespace>Cimpress.TagliatelleNetCore</RootNamespace>
+    <PackageVersion>0.0.1</PackageVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="RestSharp" Version="106.6.9" />
+  </ItemGroup>
+</Project>
