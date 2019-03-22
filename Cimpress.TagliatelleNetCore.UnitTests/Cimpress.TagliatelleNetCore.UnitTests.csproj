@@ -9,6 +9,7 @@
     <ApplicationIcon />    
     <OutputTypeEx>library</OutputTypeEx>    
     <StartupObject />
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>

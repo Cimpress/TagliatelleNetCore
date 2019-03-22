@@ -16,6 +16,7 @@
     <PackageProjectUrl>https://github.com/Cimpress/TagliatelleNetCore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Cimpress/TagliatelleNetCore.git</RepositoryUrl>
     <PackageTags>mcp cimpress tag tags</PackageTags>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
