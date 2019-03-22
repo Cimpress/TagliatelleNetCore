@@ -8,6 +8,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cimpress.TagliatelleNetCore.UnitTests", "Cimpress.TagliatelleNetCore.UnitTests\Cimpress.TagliatelleNetCore.UnitTests.csproj", "{E170103D-4CA4-49DE-B8D3-6B50B21A0147}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{B1B42068-C1E9-4005-9385-ECB3ADA2ADDA}"
+ProjectSection(SolutionItems) = preProject
+	.travis.yml = .travis.yml
+	publish.sh = publish.sh
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

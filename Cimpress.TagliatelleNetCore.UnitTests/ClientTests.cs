@@ -15,27 +15,24 @@ using Xunit;
 
 namespace Cimpress.TagliatelleNetCore.UnitTests
 {
-    public class ClientTests : IDisposable
+    [Collection("WireMock collection")]
+    public class ClientTests
     {
         private readonly Client _client;
 
-        private readonly FluentMockServer _server;
+        private WireMockFixture _fixture;
 
-        public ClientTests()
+        public ClientTests(WireMockFixture fixture)
         {
-            _server = FluentMockServer.Start(8089);
+            _fixture = fixture;
             _client = new Client("Zndlcmd2MjN0MjN0NTUzNjVmZmZld3FkMndlZmMzNDUy", "http://localhost:8089");
-        }
-
-        public void Dispose()
-        {
-            _server.Stop();   
+            _fixture.Server.Reset();
         }
 
         [Fact]
         public void UnauthenticatedRequestThrowsException() {
             
-            _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags").UsingPost())
                 .RespondWith(
                     Response.Create()
@@ -56,7 +53,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
         [Fact]
         public void UnauthorizedRequestThrowsException() {
             
-            _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags").UsingPost())
                 .RespondWith(
                     Response.Create()
@@ -77,7 +74,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
         [Fact]
         public void TagPerformsAllTheLowLevelCalls() {
             
-            _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags").UsingPost())
                 .RespondWith(
                     Response.Create()
@@ -96,7 +93,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
             
             _client.Tag<string>().WithKey("urn:tagspace:tag").WithResource("http://some.resource.url").WithValue("some value").Apply();
 
-            var logEntry = _server.FindLogEntries(
+            var logEntry = _fixture.Server.FindLogEntries(
                 Request.Create()
                     .WithPath("/v0/tags")
                     .UsingPost())
@@ -112,7 +109,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
         public void UntagPerformsAllTheLowLevelCalls()
         {
 
-            _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags")
                     .WithParam("key", "urn:tagspace:tag")
                     .WithParam("resourceUri", "http://some.resource.url")
@@ -134,9 +131,9 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                                 }
                             }
                         })
-        );
+            );
 
-        _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags/abrakadabra1234").UsingDelete())
                 .RespondWith(
                     Response.Create()
@@ -150,14 +147,14 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                 .WithValue("some value")
                 .Remove();
 
-            var logEntryGet = _server.FindLogEntries(
+            var logEntryGet = _fixture.Server.FindLogEntries(
                     Request.Create()
                         .WithPath("/v0/tags")
                         .UsingGet())
                 .FirstOrDefault();
             Assert.NotNull(logEntryGet);
             
-            var logEntryDelete = _server.FindLogEntries(
+            var logEntryDelete = _fixture.Server.FindLogEntries(
                     Request.Create()
                         .WithPath("/v0/tags/abrakadabra1234")
                         .UsingDelete())

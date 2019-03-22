@@ -14,7 +14,7 @@ namespace Cimpress.TagliatelleNetCore.Data
                 {
                     return (T) JsonConvert.DeserializeObject(Value);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return default(T);
                 }

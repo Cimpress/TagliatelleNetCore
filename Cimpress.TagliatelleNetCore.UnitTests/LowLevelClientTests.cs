@@ -12,27 +12,24 @@ using Xunit;
 
 namespace Cimpress.TagliatelleNetCore.UnitTests
 {
-    public class LowLevelClientTest : IDisposable
+    [Collection("WireMock collection")]
+
+    public class LowLevelClientTest
     {
         private readonly LowLevelClient _lowLevelClient;
+        private readonly WireMockFixture _fixture;
 
-        private readonly FluentMockServer _server;
-
-        public LowLevelClientTest()
+        public LowLevelClientTest(WireMockFixture fixture)
         {
-            _server = FluentMockServer.Start(8089);
+            _fixture = fixture;
             _lowLevelClient = new LowLevelClient("Zndlcmd2MjN0MjN0NTUzNjVmZmZld3FkMndlZmMzNDUy", "http://localhost:8089");
-        }
-
-        public void Dispose()
-        {
-            _server.Stop();   
+            _fixture.Server.Reset();
         }
 
         [Fact]
         public void PostTagHandlesUnauthorizedGracefully()
         {
-            _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags").UsingPost())
                 .RespondWith(
                     Response.Create()
@@ -49,7 +46,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
         [Fact]
         public void PostReturnsTheBodyOfCreatedTag()
         {
-            _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags").UsingPost())
                 .RespondWith(
                     Response.Create()
@@ -80,7 +77,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
         
         [Fact]
         public void PutTagHandlesUnauthorizedGracefully() {
-            _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags/0").UsingPut())
                 .RespondWith(
                     Response.Create()
@@ -96,7 +93,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
 
         [Fact]
         public void DeleteTagHandlesUnauthorizedGracefully() {
-            _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags/0").UsingDelete())
                 .RespondWith(
                     Response.Create()
@@ -111,7 +108,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
 
         [Fact]
         public void GetTagsHandlesUnauthorizedGracefully() {
-            _server
+            _fixture.Server
                 .Given(Request.Create().WithPath("/v0/tags").UsingGet())
                 .RespondWith(
                     Response.Create()

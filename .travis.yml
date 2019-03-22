@@ -1,0 +1,18 @@
+language: csharp
+mono: none
+dotnet: 2.1.300
+install:
+- dotnet restore
+script:
+- dotnet test
+- dotnet build -c Release
+- dotnet publish -c Release
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: dotnet nuget push Cimpress.TagliatelleNetCore/bin/Release/Cimpress.TagliatelleNetCore.0.0.1.nupkg  -s https://api.nuget.org/v3/index.json -k $NUGET_API_KEY
+  on:
+    branch: master
+env:
+  global:
+    secure: KvGUByvGIXghabCFUDxPFNB1QX9q71SWd8WBHvZIqclZ4nsDKB9yTH9s0KjPRIVlSiibuIpnhg1LhJ/MRJATUHAu46ncxJ00FDXc/7pSz2T0zf1/uDjoTiIoYmgfWqCZonlI6/47D8y3W038xW7EOeHk90+9ZZIGnHCDq0WZoTVNb7FOo6inHBjedX0M/W34uZXKRka7tMTUTu5OK41hTq37KINoB0ocBQ/QxLxHjcAuy5dBwtqIWbCfa1MoNHUBbobsyy6v6tg0aiULsuLkBmaSxqDC+PD6d/mufamZmvoPBB4FJSLTcFZvR3iCiCwXz5iHMz/bSuawNAX7xnVmqrZnxwOIpva1VAncVxFDoTzn5vFyNxokGm81G+gjilPVAPgMGRJY1sw/IG7Sc+8bEq88pwBdTUPMEIdEPftrf+iHQpKYX4Ij+PgQ3uQLOf54f+nEDDs+oRPf5kF2rU+2AIIqw4mA5f9l3RSjPviR646Uws11Jpx3lhnUvzeK3QIbMHYAd09e5O0Vj+2rnyas/30+9mNgF/ytK+8VqHEg3QJR8antpJN0epy+NpufWLQGXgizvoeiCDBRYI5+ElBsMF8dSHcHiB/mnyB2lFeypicZfzuQ8ILTnOqQot1a0HHIvwmOnZYGXmzhTjcJw3IjkjXIAPKzuTLiA84lmoCM2zE=
