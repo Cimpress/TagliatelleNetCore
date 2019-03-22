@@ -4,7 +4,7 @@ using Cimpress.TagliatelleNetCore.Data;
 
 namespace Cimpress.TagliatelleNetCore
 {
-    public interface IClientRequest<T>
+    public interface IClientRequest<T> 
     {
         /// <summary>
         /// Fluent command for specifying the resource the tag should refer to
@@ -25,7 +25,14 @@ namespace Cimpress.TagliatelleNetCore
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        ClientRequest<T> WithValue(T value);
+        ClientRequest<T> WithValue(string value);
+        
+        /// <summary>
+        /// Optionally it is possible to attach opaque metadata to the tag.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        ClientRequest<T> WithValueAsObject(T value);
 
         /// <summary>
         /// Apply the tag to the fluently configured conditions
@@ -41,6 +48,6 @@ namespace Cimpress.TagliatelleNetCore
         /// Fetch tags matching fluently configured conditions
         /// </summary>
         /// <returns></returns>
-        TagBulkResponse Fetch();
+        TagBulkResponse<T> Fetch();
     }
 }

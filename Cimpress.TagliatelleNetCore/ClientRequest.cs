@@ -9,7 +9,7 @@ using RestSharp;
 
 namespace Cimpress.TagliatelleNetCore
 {
-    public class ClientRequest<T> : IClientRequest<T>
+    public class ClientRequest<T> : IClientRequest<T> 
     {
         private const string TagliatelleUrl = "https://tagliatelle.trdlnk.cimpress.io/";
 
@@ -21,10 +21,10 @@ namespace Cimpress.TagliatelleNetCore
         /// <summary>
         /// Low level client abstraction for invoking commands on the API
         /// </summary>
-        private ILowLevelClient _lowLevelClient;
+        private ILowLevelClient<T> _lowLevelClient;
 
         public ClientRequest(string accessToken, string urlOverride = null) {
-            _lowLevelClient = new LowLevelClient(accessToken, urlOverride ?? TagliatelleUrl);
+            _lowLevelClient = new LowLevelClient<T>(accessToken, urlOverride ?? TagliatelleUrl);
         }
 
         public ClientRequest<T> WithResource(string resourceUri)
@@ -38,16 +38,15 @@ namespace Cimpress.TagliatelleNetCore
             _tagRequest.Key = tagKey;
             return this;
         }
-
+        
         public ClientRequest<T> WithValue(string value)
         {
             _tagRequest.Value = value;
             return this;        
         }
-        
-        public ClientRequest<T> WithValue(T value)
+        public ClientRequest<T> WithValueAsObject(T value)
         {
-            _tagRequest.ValueObject = value;
+            _tagRequest.ValueAsObject = value;
             return this;        
         }
 
@@ -83,12 +82,12 @@ namespace Cimpress.TagliatelleNetCore
             Task.WaitAll(tasks);
         }
 
-        public TagBulkResponse Fetch()
+        public TagBulkResponse<T> Fetch()
         {
             return HandleOperationFetch();
         }
 
-        private TagBulkResponse HandleOperationFetch()
+        private TagBulkResponse<T> HandleOperationFetch()
         {
             var bulkResponse = _lowLevelClient.getTags(_tagRequest.Key, _tagRequest.ResourceUri).Result;
             HandleErrorCondition(bulkResponse);
@@ -102,6 +101,8 @@ namespace Cimpress.TagliatelleNetCore
                     throw new UnauthorizedException("Your request was not properly authenticated");
                 case HttpStatusCode.Forbidden: 
                     throw new ForbiddenException("Your don't have access to perform the action");
+                case HttpStatusCode.BadRequest: 
+                    throw new MalfomedTagException("The tag is malformed");
             }
         }
     }

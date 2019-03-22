@@ -8,7 +8,7 @@ namespace Cimpress.TagliatelleNetCore
     /// Low level client captures atomic service calls and is not abstracting
     /// the underlying technology that is used to communicate with the service
     /// </summary>
-    public interface ILowLevelClient
+    public interface ILowLevelClient<T> 
     {
         /// <summary>
         /// Gets all tags matching the criteria
@@ -16,14 +16,14 @@ namespace Cimpress.TagliatelleNetCore
         /// <param name="key"></param>
         /// <param name="resourceUri"></param>
         /// <returns></returns>
-        Task<IRestResponse<TagBulkResponse>> getTags(string key, string resourceUri);
+        Task<IRestResponse<TagBulkResponse<T>>> getTags(string key, string resourceUri);
 
         /// <summary>
         /// Posts a tag
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<IRestResponse<TagResponse>> postTag(TagRequest request);
+        Task<IRestResponse<TagResponse<T>>> postTag(TagRequest<T> request);
 
         /// <summary>
         /// Updates tag with specific tag id
@@ -31,7 +31,7 @@ namespace Cimpress.TagliatelleNetCore
         /// <param name="id"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<IRestResponse<TagResponse>> putTag(string id, TagRequest request);
+        Task<IRestResponse<TagResponse<T>>> putTag(string id, TagRequest<T> request);
 
         /// <summary>
         /// Deletes tag with specific tag id

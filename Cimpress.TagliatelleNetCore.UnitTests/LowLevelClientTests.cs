@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cimpress.TagliatelleNetCore.Data;
 using Moq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -16,13 +17,13 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
 
     public class LowLevelClientTest
     {
-        private readonly LowLevelClient _lowLevelClient;
+        private readonly LowLevelClient<JObject> _lowLevelClient;
         private readonly WireMockFixture _fixture;
 
         public LowLevelClientTest(WireMockFixture fixture)
         {
             _fixture = fixture;
-            _lowLevelClient = new LowLevelClient("Zndlcmd2MjN0MjN0NTUzNjVmZmZld3FkMndlZmMzNDUy", "http://localhost:8089");
+            _lowLevelClient = new LowLevelClient<JObject>("Zndlcmd2MjN0MjN0NTUzNjVmZmZld3FkMndlZmMzNDUy", "http://localhost:8089");
             _fixture.Server.Reset();
         }
 
@@ -37,7 +38,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                         .WithBody("{}")
                 );
 
-            var tag = new TagRequest();
+            var tag = new TagRequest<JObject>();
             var response = _lowLevelClient.postTag(tag);
 
             Assert.Equal(response.Result.StatusCode, HttpStatusCode.Unauthorized);
@@ -63,7 +64,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                         })    
                 );
 
-            var tag = new TagRequest{Key = "urn:tagspace:tag", ResourceUri = "http://some.resource.url", Value = "Some value"};
+            var tag = new TagRequest<JObject> {Key = "urn:tagspace:tag", ResourceUri = "http://some.resource.url", Value = "Some value"};
             var response = _lowLevelClient.postTag(tag);
             var result = response.Result.Data;
             Assert.Equal("http://some.resource", result.ResourceUri);
@@ -85,7 +86,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                         .WithBody("{}")
                 );
 
-            var tag = new TagRequest() { Key = "urn:tagspace:tag", ResourceUri = "http://some.resource.url", Value = "Some value" };
+            var tag = new TagRequest<JObject>() { Key = "urn:tagspace:tag", ResourceUri = "http://some.resource.url", Value = "Some value" };
             var response = _lowLevelClient.putTag("0", tag);
 
             Assert.Equal(response.Result.StatusCode, HttpStatusCode.Unauthorized);
@@ -116,7 +117,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                         .WithBody("{}")
                 );
 
-            var tag = new TagRequest() { Key = "urn:tagspace:tag", ResourceUri = "http://some.resource.url", Value = "Some value" };
+            var tag = new TagRequest<JObject>() { Key = "urn:tagspace:tag", ResourceUri = "http://some.resource.url", Value = "Some value" };
             var response = _lowLevelClient.getTags("urn:test", "https://resource.url");
 
             Assert.Equal(response.Result.StatusCode, HttpStatusCode.Unauthorized);

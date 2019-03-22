@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Cimpress.TagliatelleNetCore
 {
@@ -24,8 +25,12 @@ namespace Cimpress.TagliatelleNetCore
             this._tagliatelleUrl = urlOverride;
         }
 
+        public IClientRequest<JObject> Tag() 
+        {
+            return new ClientRequest<JObject>(_accessToken, _tagliatelleUrl);
+        }
         
-        public IClientRequest<T> Tag<T>()
+        public IClientRequest<T> Tag<T>() 
         {
             return new ClientRequest<T>(_accessToken, _tagliatelleUrl);
         }

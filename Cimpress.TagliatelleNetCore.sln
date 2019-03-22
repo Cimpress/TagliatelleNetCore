@@ -10,7 +10,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{B1B42068-C1E9-4005-9385-ECB3ADA2ADDA}"
 ProjectSection(SolutionItems) = preProject
 	.travis.yml = .travis.yml
+	README.md = README.md
 EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cimpress.TagliatelleNetCore.Example", "Cimpress.TagliatelleNetCore.Example\Cimpress.TagliatelleNetCore.Example.csproj", "{26583C0F-EA43-4DDE-8D65-6D8F7BE39799}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +29,10 @@ Global
 		{E170103D-4CA4-49DE-B8D3-6B50B21A0147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E170103D-4CA4-49DE-B8D3-6B50B21A0147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E170103D-4CA4-49DE-B8D3-6B50B21A0147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26583C0F-EA43-4DDE-8D65-6D8F7BE39799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26583C0F-EA43-4DDE-8D65-6D8F7BE39799}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26583C0F-EA43-4DDE-8D65-6D8F7BE39799}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26583C0F-EA43-4DDE-8D65-6D8F7BE39799}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

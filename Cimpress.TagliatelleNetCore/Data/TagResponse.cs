@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Cimpress.TagliatelleNetCore.Data
 {
-    public class TagResponse : TagRequest
+    public class TagResponse<T> : TagRequest<T> 
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -22,6 +22,8 @@ namespace Cimpress.TagliatelleNetCore.Data
         public string ModifiedBy { get; set; }
 
         [JsonProperty("_links")]
-        public IDictionary<string, object> Links { get; set; }   
+        public Dictionary<string, object> Links { get; set; }   
+        
+        public new T ValueAsObject => (T) JsonConvert.DeserializeObject(Value);
     }
 }

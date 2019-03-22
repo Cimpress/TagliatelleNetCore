@@ -3,34 +3,19 @@ using Newtonsoft.Json;
 
 namespace Cimpress.TagliatelleNetCore.Data
 {   
-    public class TagRequest<T> : TagRequest
-    {
-        [JsonIgnore]
-        public T ValueObject
-        {
-            get
-            {
-                try
-                {
-                    return (T) JsonConvert.DeserializeObject(Value);
-                }
-                catch (Exception)
-                {
-                    return default(T);
-                }
-            }
-            set => Value = JsonConvert.SerializeObject(value);
-        }
-    }
-    
-    public class TagRequest
+    public class TagRequest<T> 
     {
         [JsonProperty("key")]
         public string Key { get; set; }
 
-        [JsonProperty("value")]
-
+        [JsonProperty("value")] 
         public string Value { get; set; }
+            
+        [JsonIgnore]
+        public T ValueAsObject
+        {
+            set => Value = JsonConvert.SerializeObject(value);
+        }
 
         [JsonProperty("resourceUri")]
         public string ResourceUri { get; set; }

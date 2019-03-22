@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Cimpress.TagliatelleNetCore.Data
-{
-    public class TagBulkResponse
+{   
+    public class TagBulkResponse<T> 
     {
         [JsonProperty("count")]
         public int Count { get; set; }
@@ -15,6 +15,6 @@ namespace Cimpress.TagliatelleNetCore.Data
         public string Offset { get; set; }
         
         [JsonProperty("results")]
-        public IList<TagResponse> Results { get; set; }
+        public List<TagResponse<T>> Results { get; set; }
     }
 }
