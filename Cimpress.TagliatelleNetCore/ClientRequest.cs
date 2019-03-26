@@ -27,24 +27,24 @@ namespace Cimpress.TagliatelleNetCore
             _lowLevelClient = new LowLevelClient<T>(accessToken, urlOverride ?? TagliatelleUrl);
         }
 
-        public ClientRequest<T> WithResource(string resourceUri)
+        public IClientRequest<T> WithResource(string resourceUri)
         {
             _tagRequest.ResourceUri = resourceUri;
             return this;
         }
 
-        public ClientRequest<T> WithKey(string tagKey)
+        public IClientRequest<T> WithKey(string tagKey)
         {
             _tagRequest.Key = tagKey;
             return this;
         }
         
-        public ClientRequest<T> WithValue(string value)
+        public IClientRequest<T> WithValue(string value)
         {
             _tagRequest.Value = value;
             return this;        
         }
-        public ClientRequest<T> WithValueAsObject(T value)
+        public IClientRequest<T> WithValueAsObject(T value)
         {
             _tagRequest.ValueAsObject = value;
             return this;        
