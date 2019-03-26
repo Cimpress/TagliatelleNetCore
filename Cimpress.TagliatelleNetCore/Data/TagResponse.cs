@@ -24,6 +24,6 @@ namespace Cimpress.TagliatelleNetCore.Data
         [JsonProperty("_links")]
         public Dictionary<string, object> Links { get; set; }   
         
-        public new T ValueAsObject => (T) JsonConvert.DeserializeObject(Value);
+        public new T ValueAsObject => (T) JsonConvert.DeserializeObject(Value, typeof(T));
     }
 }

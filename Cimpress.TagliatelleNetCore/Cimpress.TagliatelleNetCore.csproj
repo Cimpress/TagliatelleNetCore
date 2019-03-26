@@ -11,7 +11,7 @@
     <Description>A thin client library for Cimpress' Tagliatelle service.</Description>
     <AssemblyName>Cimpress.TagliatelleNetCore</AssemblyName>
     <RootNamespace>Cimpress.TagliatelleNetCore</RootNamespace>
-    <PackageVersion>0.0.3</PackageVersion>
+    <PackageVersion>0.0.4</PackageVersion>
     <Title>Cimpress Tagliatelle Client</Title>
     <PackageProjectUrl>https://github.com/Cimpress/TagliatelleNetCore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Cimpress/TagliatelleNetCore.git</RepositoryUrl>
