@@ -4,8 +4,8 @@ namespace Cimpress.TagliatelleNetCore
 {
     public interface IClient
     {
-        IClientRequest<T> Tag<T>() ;
+        IClientRequest<T> Tag<T>(string accessToken) ;
         
-        IClientRequest<JObject> Tag() ;
+        IClientRequest<JObject> Tag(string accessToken) ;
     }
 }

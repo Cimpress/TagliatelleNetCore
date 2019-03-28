@@ -25,7 +25,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
         public ClientTests(WireMockFixture fixture)
         {
             _fixture = fixture;
-            _client = new Client("Zndlcmd2MjN0MjN0NTUzNjVmZmZld3FkMndlZmMzNDUy", "http://localhost:8089");
+            _client = new Client("http://localhost:8089");
             _fixture.Server.Reset();
         }
 
@@ -41,7 +41,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                 );
             
             Exception ex = Assert.Throws<Exceptions.UnauthorizedException>(() => 
-                _client.Tag<string>()
+                _client.Tag<string>("Zndlcmd2MjN0MjN0NTUzNjVmZmZld3FkMndlZmMzNDUy")
                     .WithKey("urn:tagspace:tag")
                     .WithResource("http://some.resource.url")
                     .WithValue("some value")
@@ -62,7 +62,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                 );
             
             Exception ex = Assert.Throws<Exceptions.ForbiddenException>(() => 
-                _client.Tag<string>()
+                _client.Tag<string>("Zndlcmd2MjN0MjN0NTUzNjVmZmZld3FkMndlZmMzNDUy")
                     .WithKey("urn:tagspace:tag")
                     .WithResource("http://some.resource.url")
                     .WithValue("some value")
@@ -91,7 +91,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                             })
                     );
             
-            _client.Tag<string>().WithKey("urn:tagspace:tag").WithResource("http://some.resource.url").WithValue("some value").Apply();
+            _client.Tag<string>("Zndlcmd2MjN0MjN0NTUzNjVmZmZld3FkMndlZmMzNDUy").WithKey("urn:tagspace:tag").WithResource("http://some.resource.url").WithValue("some value").Apply();
 
             var logEntry = _fixture.Server.FindLogEntries(
                 Request.Create()
@@ -141,7 +141,7 @@ namespace Cimpress.TagliatelleNetCore.UnitTests
                         .WithBody("{}")
                 );
             
-            _client.Tag<string>()
+            _client.Tag<string>("Zndlcmd2MjN0MjN0NTUzNjVmZmZld3FkMndlZmMzNDUy")
                 .WithKey("urn:tagspace:tag")
                 .WithResource("http://some.resource.url")
                 .WithValue("some value")

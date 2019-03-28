@@ -13,31 +13,35 @@ namespace Cimpress.TagliatelleNetCore
         /// <summary>
         /// Gets all tags matching the criteria
         /// </summary>
+        /// <param name="accessToken"></param>
         /// <param name="key"></param>
         /// <param name="resourceUri"></param>
         /// <returns></returns>
-        Task<IRestResponse<TagBulkResponse<T>>> getTags(string key, string resourceUri);
+        Task<IRestResponse<TagBulkResponse<T>>> getTags(string accessToken, string key, string resourceUri);
 
         /// <summary>
         /// Posts a tag
         /// </summary>
+        /// <param name="accessToken"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<IRestResponse<TagResponse<T>>> postTag(TagRequest<T> request);
+        Task<IRestResponse<TagResponse<T>>> postTag(string accessToken, TagRequest<T> request);
 
         /// <summary>
         /// Updates tag with specific tag id
         /// </summary>
+        /// <param name="accessToken"></param>
         /// <param name="id"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<IRestResponse<TagResponse<T>>> putTag(string id, TagRequest<T> request);
+        Task<IRestResponse<TagResponse<T>>> putTag(string accessToken, string id, TagRequest<T> request);
 
         /// <summary>
         /// Deletes tag with specific tag id
         /// </summary>
+        /// <param name="accessToken"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IRestResponse> deleteTag(string id);
+        Task<IRestResponse> deleteTag(string accessToken, string id);
     }
 }

@@ -23,8 +23,12 @@ namespace Cimpress.TagliatelleNetCore
         /// </summary>
         private ILowLevelClient<T> _lowLevelClient;
 
-        public ClientRequest(string accessToken, string urlOverride = null) {
-            _lowLevelClient = new LowLevelClient<T>(accessToken, urlOverride ?? TagliatelleUrl);
+        private string _accessToken;
+
+        public ClientRequest(string accessToken, string urlOverride = null)
+        {
+            _accessToken = accessToken;
+            _lowLevelClient = new LowLevelClient<T>(urlOverride ?? TagliatelleUrl);
         }
 
         public IClientRequest<T> WithResource(string resourceUri)
@@ -57,15 +61,15 @@ namespace Cimpress.TagliatelleNetCore
 
         private void HandleOperationTag()
         {
-            var response = _lowLevelClient.postTag(_tagRequest).Result;
+            var response = _lowLevelClient.postTag(_accessToken, _tagRequest).Result;
             HandleErrorCondition(response);
             if (response.StatusCode != HttpStatusCode.Conflict) return;
-            var bulkResponse = _lowLevelClient.getTags(_tagRequest.Key, _tagRequest.ResourceUri).Result;
+            var bulkResponse = _lowLevelClient.getTags(_accessToken, _tagRequest.Key, _tagRequest.ResourceUri).Result;
             if (bulkResponse.Data.Total != 1) {
                 throw new Exception("Unable to update the tag");
             }
             var existingTag = bulkResponse.Data.Results[0];
-            _lowLevelClient.putTag(existingTag.Id, _tagRequest);
+            _lowLevelClient.putTag(_accessToken, existingTag.Id, _tagRequest);
         }
 
         public void Remove()
@@ -75,10 +79,10 @@ namespace Cimpress.TagliatelleNetCore
 
         private void handleOperationUntag()
         {
-            var bulkResponse = _lowLevelClient.getTags(_tagRequest.Key, _tagRequest.ResourceUri).Result;
+            var bulkResponse = _lowLevelClient.getTags(_accessToken, _tagRequest.Key, _tagRequest.ResourceUri).Result;
             HandleErrorCondition(bulkResponse);
             var bulkResponseResults = bulkResponse.Data;
-            var tasks = bulkResponseResults.Results.Select(r => _lowLevelClient.deleteTag(r.Id)).Cast<Task>().ToArray();
+            var tasks = bulkResponseResults.Results.Select(r => _lowLevelClient.deleteTag(_accessToken, r.Id)).Cast<Task>().ToArray();
             Task.WaitAll(tasks);
         }
 
@@ -89,7 +93,7 @@ namespace Cimpress.TagliatelleNetCore
 
         private TagBulkResponse<T> HandleOperationFetch()
         {
-            var bulkResponse = _lowLevelClient.getTags(_tagRequest.Key, _tagRequest.ResourceUri).Result;
+            var bulkResponse = _lowLevelClient.getTags(_accessToken, _tagRequest.Key, _tagRequest.ResourceUri).Result;
             HandleErrorCondition(bulkResponse);
             return bulkResponse.Data;
         }

@@ -13,26 +13,20 @@ namespace Cimpress.TagliatelleNetCore
 {
     public class Client : IClient
     {
-        private readonly string _accessToken = null;
         private readonly string _tagliatelleUrl = null;
 
-        public Client(string accessToken) {
-            _accessToken = accessToken;
-        }
-
-
-        public Client(string accessToken, string urlOverride) : this(accessToken) {
+        public Client(string urlOverride = null) {
             this._tagliatelleUrl = urlOverride;
         }
 
-        public IClientRequest<JObject> Tag() 
+        public IClientRequest<JObject> Tag(string accessToken) 
         {
-            return new ClientRequest<JObject>(_accessToken, _tagliatelleUrl);
+            return new ClientRequest<JObject>(accessToken, _tagliatelleUrl);
         }
         
-        public IClientRequest<T> Tag<T>() 
+        public IClientRequest<T> Tag<T>(string accessToken) 
         {
-            return new ClientRequest<T>(_accessToken, _tagliatelleUrl);
+            return new ClientRequest<T>(accessToken, _tagliatelleUrl);
         }
     }
 }
