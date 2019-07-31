@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cimpress.TagliatelleNetCore.Data;
 using RestSharp;
 
@@ -18,6 +19,15 @@ namespace Cimpress.TagliatelleNetCore
         /// <param name="resourceUri"></param>
         /// <returns></returns>
         Task<IRestResponse<TagBulkResponse<T>>> getTags(string accessToken, string key, string resourceUri);
+        
+        /// <summary>
+        /// Gets all tags matching the criteria
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="key"></param>
+        /// <param name="resourceUris"></param>
+        /// <returns></returns>
+        Task<IRestResponse<TagBulkResponse<T>>> getTags(string accessToken, string key, IList<string> resourceUris);
 
         /// <summary>
         /// Posts a tag
