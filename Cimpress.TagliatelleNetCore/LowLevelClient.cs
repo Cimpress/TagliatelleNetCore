@@ -41,9 +41,11 @@ namespace Cimpress.TagliatelleNetCore
 
             if (resourceUris != null)
             {
-                foreach (var item in resourceUris)
+                foreach (var resourceUri in resourceUris)
                 {
-                    request.AddParameter("resourceUri", item);
+                    if(resourceUri != null){
+                        request.AddParameter("resourceUri", resourceUri);
+                    }
                 }
             }
 
